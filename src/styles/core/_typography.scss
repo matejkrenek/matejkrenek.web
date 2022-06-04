@@ -1,0 +1,45 @@
+@use './variables/variables.fonts' as font;
+
+h1, .h1,
+h4, .h4,
+strong, .strong {
+    font-weight: font.weight(semiBold);
+}
+
+h5, .h5 {
+    font-weight: font.weight(medium);
+}
+
+p, .p,
+span, .span,
+small, .small {
+    font-weight: font.weight(regular);
+}
+
+h1, .h1 {
+    font-size: font.size(h1);
+}
+
+h4, .h4 {
+    font-size: font.size(h4);
+}
+
+h5, .h5 {
+    font-size: font.size(h5);
+}
+
+p, .p {
+    font-size: font.size(p);
+}
+
+span, .span {
+    font-size: font.size(span);
+}
+
+button, .btn {
+    font-size: font.size(button);
+}
+
+input, select, textarea {
+    font-size: font.size(input);
+}

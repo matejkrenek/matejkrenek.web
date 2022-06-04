@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+$font: (
+    size: (
+        h1: 4.6rem,
+        h4: 1.8rem,
+        h5: 1.6rem,
+        p: 1.2rem,
+        span: 1.2rem,
+        input: 1.6rem,
+        button: 1.6rem,
+    ),
+    weight: (
+        semiBold: 600,
+        medium: 500,
+        regular: 400,
+    ),
+    family: (
+        primary: (
+            'Inter',
+            Arial,
+            sans-serif,
+        ),
+    ),
+);
+
+@function family($value: primary) {
+    $size: map-get(map-get($font, family), $value);
+    @return $size;
+}
+
+@function size($value) {
+    $size: map-get(map-get($font, size), $value);
+    @return $size;
+}
+
+@function weight($value) {
+    $weight: map-get(map-get($font, weight), $value);
+    @return $weight;
+}

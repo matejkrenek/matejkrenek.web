@@ -1,0 +1,18 @@
+@use '../../styles/core/variables/variables.colors' as *;
+
+.kanbanColumn {
+    border-radius: 1.6rem;
+    padding: 2rem;
+    width: 35rem;
+    background-color: color(white, secondary);
+
+    > hr {
+        height: 3px;
+    }
+}
+
+.kanbanColumn__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

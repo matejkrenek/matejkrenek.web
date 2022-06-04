@@ -1,0 +1,36 @@
+@use '../../styles/core/variables/variables.fonts' as font;
+@use '../../styles/core/variables/variables.colors' as *;
+
+.avatar {
+    flex-shrink: 0;
+    position: relative;
+    width: 3.8rem;
+    height: 3.8rem;
+    background-color: color(grey, secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color(white);
+    overflow: hidden;
+
+    &--small {
+        width: 2.4rem;
+        height: 2.4rem;
+    }
+
+    &--inicials {
+        font-weight: font.weight(medium);
+        font-size: font.size(p);
+        color: color(grey);
+    }
+
+    &--image {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .avatar__list &:not(:first-child) {
+        margin-left: -0.8rem;
+    }
+}

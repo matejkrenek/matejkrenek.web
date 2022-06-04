@@ -1,0 +1,19 @@
+@use '../core/variables/variables.colors' as *;
+@use '../core/variables/variables.fonts' as font;
+
+.bubble {
+    border-radius: 50%;
+    background-color: color(grey, secondary);
+    color: color(grey);
+    font-weight: font.weight(medium);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bubble--small {
+    width: 8px;
+    height: 8px;
+}
