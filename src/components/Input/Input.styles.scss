@@ -1,0 +1,27 @@
+@use '../../styles/core/variables/variables.fonts' as font;
+@use '../../styles/core/variables/variables.colors' as *;
+
+.input {
+    display: flex;
+    flex-direction: column;
+
+    input {
+        font-size: font.size(input);
+        font-family: font.family();
+        font-weight: font.weight(regular);
+        padding: 1.2rem 1.6rem;
+        background-color: transparent;
+        border: 1px solid color(black, secondary);
+        outline: none;
+        border-radius: 0.6rem;
+
+    }
+
+    label {
+        font-size: 1.2rem;
+        font-family: font.family();
+        font-weight: font.weight(regular); 
+        margin-bottom: 0.4rem;
+    }
+
+}

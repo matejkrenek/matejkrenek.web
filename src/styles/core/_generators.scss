@@ -1,4 +1,14 @@
 @use './variables/variables.gaps' as *;
+   
+@for $i from 0 through 100 {
+    .w-#{$i} {
+        width: ($i + 0%) !important;
+    }
+
+    .h-#{$i} {
+        height: ($i + 0%) !important;
+    }
+}
 
 @each $gapKey, $gapValue in $gaps {
     .m-#{$gapKey} {

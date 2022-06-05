@@ -2,17 +2,43 @@
 
 .kanbanColumn {
     border-radius: 1.6rem;
-    padding: 2rem;
-    width: 35rem;
     background-color: color(white, secondary);
 
     > hr {
         height: 3px;
+    }
+
+    &:hover {
+        .kanbanTask__add {
+            pointer-events: all;
+            opacity: 1;
+        }
     }
 }
 
 .kanbanColumn__header {
     display: flex;
     align-items: center;
+    padding: 2rem;
     justify-content: space-between;
+}
+
+.kanbanTask__add {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.kanbanColumn__content {
+    padding: 2rem;
+    max-height: calc(100vh - 30rem);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }

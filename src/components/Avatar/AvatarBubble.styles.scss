@@ -17,12 +17,17 @@
     &--small {
         width: 2.4rem;
         height: 2.4rem;
+        
+        .avatar--inicials {
+            font-size: 1rem;
+        }
     }
 
     &--inicials {
         font-weight: font.weight(medium);
         font-size: font.size(p);
         color: color(grey);
+
     }
 
     &--image {
@@ -32,5 +37,9 @@
 
     .avatar__list &:not(:first-child) {
         margin-left: -0.8rem;
+
+        &.avatar--small {
+            margin-left: -0.4rem;
+        }
     }
 }

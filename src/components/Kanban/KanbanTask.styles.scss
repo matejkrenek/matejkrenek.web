@@ -1,0 +1,7 @@
+@use '../../styles/core/variables/variables.colors' as *;
+
+.kanbanTask {
+    padding: 2rem;
+    border-radius: 1.6rem;
+    background-color: color(white);
+}

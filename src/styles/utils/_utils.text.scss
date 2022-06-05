@@ -1,0 +1,6 @@
+@use '../core/variables/variables.colors' as *;
+@use '../core/variables/variables.fonts' as font;
+
+.text--muted {
+    color: color(black, secondary);
+}

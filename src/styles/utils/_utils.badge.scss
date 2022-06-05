@@ -1,0 +1,28 @@
+@use '../core/variables/variables.colors' as *;
+@use '../core/variables/variables.fonts' as font;
+
+.badge {
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.4rem;
+    color: color(grey);
+    font-weight: font.weight(medium);
+    background-color: color(grey, secondary);
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+.badge--orange {
+    color: color(orange);
+    background-color: color(orange, transparent);
+}
+
+.badge--red {
+    color: color(red);
+    background-color: color(red, transparent);
+}
+
+.badge--green {
+    color: color(green);
+    background-color: color(green, transparent);
+}

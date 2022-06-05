@@ -1,0 +1,107 @@
+@use '../../styles/core/variables/variables.fonts' as font;
+@use '../../styles/core/variables/variables.colors' as *;
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    color: color(black);
+    cursor: pointer;
+    transition: opacity 0.1s;
+    font-size: font.size(button);
+    font-family: font.family();
+    font-weight: font.weight(medium);
+    background-color: color(white, secondary);
+    color: color(grey);
+    padding: 1.2rem;
+    border-radius: 0.8rem;
+    
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:not(:last-child) {
+            margin-right: 0.6rem;
+        }
+    }
+
+    &--purple {
+        color: color(purple);
+        background-color: color(purple, transparent);
+    }
+
+    > span {
+        font-size: font.size(button);
+        font-family: font.family();
+        font-weight: font.weight(medium);
+    }
+
+    &--primary {
+        color: color(white);
+        background-color: color(purple);
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        opacity: 0.8;
+    }
+}
+
+.btn--icon:not(.btn--regular) {
+    color: color(grey, primary);
+    background-color: transparent;
+    padding: unset;
+
+    svg {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+
+    .icon {
+        padding: 0.6rem;
+        border-radius: 0.8rem;
+        background-color: color(grey, secondary);
+
+        &:not(:last-child) {
+            margin-right: 0.8rem;
+        }
+
+    }
+
+
+    &.btn--purple {
+        color: color(purple);
+        background-color: transparent;
+
+        .icon {
+            background-color: color(purple, transparent);
+        }
+    }
+
+    &.btn--medium {
+        svg {
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+    
+        .icon {
+            padding: 0.6rem;
+        }
+    }
+
+    &.btn--small {
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    
+        .icon {
+            padding: 0.5rem;
+        }
+    }
+
+}

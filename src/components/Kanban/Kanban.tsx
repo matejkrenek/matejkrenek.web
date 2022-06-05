@@ -1,18 +1,33 @@
+import { FiPlus } from 'react-icons/fi';
 import { IKanbanColumn } from 'types/kanban.type';
 
 import KanbanColumn from './KanbanColumn';
 import './Kanban.styles.scss';
+import Button from 'components/Button/Button';
+import React from 'react';
 
 type KanbanProps = {
-  columns: IKanbanColumn[] | [];
+  columns: IKanbanColumn[];
+  setColumns: React.Dispatch<React.SetStateAction<IKanbanColumn[]>>;
 };
 
-const Kanban: React.FC<KanbanProps> = ({ columns }) => {
+const Kanban: React.FC<KanbanProps> = ({ columns, setColumns }) => {
+  function addColumn() {
+    setColumns([
+      ...columns,
+      {
+        name: `column #${columns.length + 1}`,
+        order: columns.length + 1,
+      },
+    ]);
+  }
+
   return (
     <div className="kanban">
-      {columns.map((column: IKanbanColumn, index: number) => (
-        <KanbanColumn key={index} column={column} />
-      ))}
+      {columns && columns.map((column: IKanbanColumn, index: number) => <KanbanColumn key={index} column={column} />)}
+      <Button icon={<FiPlus />} type="regular" onClick={addColumn}>
+        Add column
+      </Button>
     </div>
   );
 };

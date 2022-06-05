@@ -1,0 +1,13 @@
+@use "../../styles/core/variables/variables.colors" as *;
+
+.authCard {
+  background-color: color(white, secondary);
+  margin: 15vh auto;
+  min-width: 30rem;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.6rem;
+  border-radius: 1.6rem;
+}
