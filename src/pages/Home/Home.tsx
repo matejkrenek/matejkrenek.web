@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { UserAvatar } from 'types/user.type';
 import { IKanban, IKanbanColumn } from 'types/kanban.type';
@@ -8,6 +8,7 @@ import AvatarList from 'components/Avatar/AvatarList';
 import './Home.styles.scss';
 import Kanban from 'components/Kanban/Kanban';
 import Button from 'components/Button/Button';
+import { AuthApi } from 'api/auth/auth.api';
 
 const Home: React.FC = () => {
   const [columns, setColumns] = useState<IKanbanColumn[]>([
@@ -46,6 +47,20 @@ const Home: React.FC = () => {
     name: 'Kanban name',
     columns: columns,
   };
+
+  useEffect(() => {
+    const register = async () => {
+      console.log(
+        await AuthApi.register({
+          username: 'matejkrenek',
+          email: 'mate23.krenek@gmail.com',
+          password: '123456789matej',
+          password_confirmation: '123456789matej',
+        })
+      );
+    };
+    register();
+  }, []);
 
   return (
     <main className="container">
