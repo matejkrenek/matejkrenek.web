@@ -1,6 +1,5 @@
 import { FiFile, FiMessageCircle } from 'react-icons/fi';
 import { IKanbanTask } from 'types/kanban.type';
-import { UserAvatar } from 'types/user.type';
 
 import AvatarList from 'components/Avatar/AvatarList';
 import './KanbanTask.styles.scss';

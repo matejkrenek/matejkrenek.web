@@ -7,7 +7,7 @@ export const config: Config.Api = {
 }
 
 const instance: AxiosInstance = axios.create({
-    baseURL: config.url,
+    baseURL: `${config.url}/${config.version}`,
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
