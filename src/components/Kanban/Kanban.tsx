@@ -1,5 +1,5 @@
 import { FiPlus } from 'react-icons/fi';
-import { IKanbanColumn } from 'types/kanban.type';
+import { IKanbanColumn } from 'types/kanban.types';
 
 import KanbanColumn from './KanbanColumn';
 import './Kanban.styles.scss';

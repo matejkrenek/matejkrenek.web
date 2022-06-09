@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
-import { IKanbanColumn, IKanbanTask } from 'types/kanban.type';
+import { IKanbanColumn, IKanbanTask } from 'types/kanban.types';
 
 import KanbanTask from './KanbanTask';
 import Button from 'components/Button/Button';

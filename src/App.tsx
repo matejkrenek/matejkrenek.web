@@ -5,17 +5,55 @@ import Navbar from 'components/Navbar/Navbar';
 import Login from 'pages/Login/Login';
 import Register from 'pages/Register/Register';
 import { AuthService } from 'services/auth/auth.service';
+import { useEffect } from 'react';
+import Kanban from 'pages/Kanban/Kanban';
 
 const App: React.FC = () => {
+  const auth = AuthService.useContext();
+
+  useEffect(() => {
+    const authorize = async () => await auth.authorize();
+    authorize();
+  }, []);
+
   return (
-    <AuthService.Provider>
-      <Navbar />
+    <>
+      {auth.user() && <Navbar />}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/"
+          element={
+            <AuthService.Authorized>
+              <Home />
+            </AuthService.Authorized>
+          }
+        />
+        <Route
+          path="/:slug"
+          element={
+            <AuthService.Authorized>
+              <Kanban />
+            </AuthService.Authorized>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <AuthService.Guest>
+              <Login />
+            </AuthService.Guest>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <AuthService.Guest>
+              <Register />
+            </AuthService.Guest>
+          }
+        />
       </Routes>
-    </AuthService.Provider>
+    </>
   );
 };
 

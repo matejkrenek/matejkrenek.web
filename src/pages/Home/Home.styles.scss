@@ -1,10 +1,24 @@
-.container {
-    padding: 4.2rem 4.8rem;
-}
+@use '../../styles/core/variables/variables.fonts' as font;
+@use '../../styles/core/variables/variables.colors' as *;
 
 .header {
     margin-bottom: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.kanbanCard {
+    padding: 2rem;
+    flex-basis: 25%;
+    max-width: 35rem;
+    min-width: 20rem;
+    border: 1px solid color(grey, secondary);
+    border-radius: 1.6rem;
+}
+
+.kanbanCard__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
 }

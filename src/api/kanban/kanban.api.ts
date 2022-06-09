@@ -4,6 +4,26 @@ import { ApiResponse } from "types/api.types";
 import { KanbanColumnRequest, KanbanInviteRequest, KanbanTaskRequest } from "./kanban.types";
 
 export namespace KanbanApi {
+    export async function getAll(): Promise<ApiResponse> {
+        try {
+            const response: AxiosResponse = await api.get(`/kanban`)
+                
+            return await {
+                status: response.status,
+                message: response.data.message || '',
+                errors: response.data.errors || [],
+                data: response.data
+            };
+        } catch(error: AxiosError | any) {
+            return {
+                status: error.response.status,
+                message: error.response.data.message || error.message,
+                errors: error.response.data.errors || [],
+                data: error.response.data
+            };
+        }
+    }
+
     export async function get(id: number): Promise<ApiResponse> {
         try {
             const response: AxiosResponse = await api.get(`/kanban/${id}`)

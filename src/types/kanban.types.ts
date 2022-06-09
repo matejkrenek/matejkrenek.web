@@ -20,7 +20,10 @@ export interface IKanban {
     id: number
     name: string
     description?: string
-    author?: User
-    columns: IKanbanColumn[] | null
-    members?: User[]
+    author: User
+    columns_count: number
+    tasks_count: number
+    members: User[]
+    created_at: string
+    updated_at: string
 }
