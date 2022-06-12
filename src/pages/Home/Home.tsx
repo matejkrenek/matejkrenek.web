@@ -51,6 +51,14 @@ const Home: React.FC = () => {
     kanbans();
   }, []);
 
+  useEffect(() => {
+    if (store.isLoading) {
+      document.querySelector('.kanbanCard__list')?.classList.add('is-loading');
+    } else {
+      document.querySelector('.kanbanCard__list')?.classList.remove('is-loading');
+    }
+  }, [store.isLoading]);
+
   return (
     <main className="container">
       <header className="header">
@@ -59,29 +67,26 @@ const Home: React.FC = () => {
         </div>
       </header>
       <div className="kanbanCard__list">
-        {store.isLoading
-          ? '...loading'
-          : store.kanbans
-          ? store.kanbans.map((kanban: IKanban, index: number) => (
-              <Link key={index} to={kanban.id.toString()} className="kanbanCard">
-                <h4 className="mb-8">{kanban.name}</h4>
-                <p className="text--muted">{kanban.description ? kanban.description : 'Žádný popis'}</p>
-                <div className="d-flex justify-between align-center mt-16">
-                  <AvatarList users={kanban.members} limit={3} size="small" />
-                  <div className="d-flex">
-                    <div className="d-flex align-center mr-12 text--muted">
-                      <FiColumns className="mr-4" />
-                      <span>{kanban.columns_count} sloupců</span>
-                    </div>
-                    <div className="d-flex align-center text--muted">
-                      <FiCheckSquare className="mr-4" />
-                      <span>{kanban.tasks_count} úkolů</span>
-                    </div>
+        {store.kanbans &&
+          store.kanbans.map((kanban: IKanban, index: number) => (
+            <Link key={index} to={kanban.id.toString()} className="kanbanCard">
+              <h4 className="mb-8">{kanban.name}</h4>
+              <p className="text--muted">{kanban.description ? kanban.description : 'Žádný popis'}</p>
+              <div className="d-flex justify-between align-center mt-16">
+                <AvatarList users={kanban.members} limit={3} size="small" />
+                <div className="d-flex">
+                  <div className="d-flex align-center mr-12 text--muted">
+                    <FiColumns className="mr-4" />
+                    <span>{kanban.columns_count} sloupců</span>
+                  </div>
+                  <div className="d-flex align-center text--muted">
+                    <FiCheckSquare className="mr-4" />
+                    <span>{kanban.tasks_count} úkolů</span>
                   </div>
                 </div>
-              </Link>
-            ))
-          : 'empty'}
+              </div>
+            </Link>
+          ))}
       </div>
     </main>
   );

@@ -30,7 +30,13 @@
 }
 
 .kanbanCard__list {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     gap: 1.6rem;
+
+    &.is-loading {
+        min-height: 300px;
+
+    }
 }

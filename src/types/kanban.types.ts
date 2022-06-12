@@ -1,12 +1,13 @@
-import { User, UserAvatar } from "./user.type"
+import { User } from "./user.type"
 
 export interface IKanbanTask {
     name: string
     description?: string
-    priority: 'low' | 'high' | 'normal'
-    comments: number
-    files: number
-    members: UserAvatar[]
+    executor?: User
+    author?: User
+    column: IKanbanColumn
+    created_at: string,
+    updated_at: string
 }
 
 export interface IKanbanColumn {

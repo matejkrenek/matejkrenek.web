@@ -13,6 +13,7 @@ type AuthProviderProps = {
 type AuthContextState = {
   user: () => any;
   isLoading: () => any;
+  isAuthorizing: () => any;
   errors: () => any;
   authorize: () => any;
   register: (request: AuthRegisterRequest) => any;
@@ -23,6 +24,7 @@ type AuthContextState = {
 export const AuthContext = React.createContext<AuthContextState>({
   user: () => false,
   isLoading: () => true,
+  isAuthorizing: () => true,
   errors: () => false,
   authorize: () => false,
   register: () => false,
@@ -31,7 +33,7 @@ export const AuthContext = React.createContext<AuthContextState>({
 });
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [store, dispatch] = React.useReducer(AuthReducer, { user: null, isLoading: false, errors: {} });
+  const [store, dispatch] = React.useReducer(AuthReducer, { user: null, isLoading: false, isAuthorizing: false, errors: {} });
 
   const user = () => {
     return store.user;
@@ -39,6 +41,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const isLoading = () => {
     return store.isLoading;
+  };
+
+  const isAuthorizing = () => {
+    return store.isAuthorizing;
   };
 
   const errors = () => {
@@ -52,9 +58,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
       dispatch({
-        type: AuthActionTypes.LOADING,
+        type: AuthActionTypes.AUTHORIZING,
         payload: {
-          isLoading: true,
+          isAuthorizing: true,
         },
       });
 
@@ -79,9 +85,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       dispatch({
-        type: AuthActionTypes.LOADING,
+        type: AuthActionTypes.AUTHORIZING,
         payload: {
-          isLoading: false,
+          isAuthorizing: false,
         },
       });
     }
@@ -95,9 +101,28 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       },
     });
 
-    const response: ApiResponse = await AuthApi.register(request);
+    const { status, data, errors }: ApiResponse = await AuthApi.register(request);
 
-    console.log(response);
+    switch (status) {
+      case 422:
+        dispatch({
+          type: AuthActionTypes.ERROR,
+          payload: {
+            errors: errors,
+          },
+        });
+        break;
+      default:
+        dispatch({
+          type: AuthActionTypes.LOGIN,
+          payload: {
+            user: data.data,
+          },
+        });
+
+        CookieService.set('access_token', data.data.token, { path: '/' });
+        api.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`;
+    }
 
     dispatch({
       type: AuthActionTypes.LOADING,
@@ -182,7 +207,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     });
   };
 
-  return <AuthContext.Provider value={{ user, isLoading, errors, authorize, register, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, isLoading, isAuthorizing, errors, authorize, register, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

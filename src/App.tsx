@@ -17,9 +17,18 @@ const App: React.FC = () => {
     authorize();
   }, []);
 
+  useEffect(() => {
+    if (auth.isAuthorizing()) {
+      document.querySelector('body')?.classList.add('is-loading');
+    } else {
+      document.querySelector('body')?.classList.remove('is-loading');
+    }
+  }, [auth.isAuthorizing]);
+
   return (
     <>
       {auth.user() && <Navbar />}
+
       <Routes>
         <Route
           path="/"

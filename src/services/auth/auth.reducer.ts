@@ -2,6 +2,7 @@ import { User } from 'types/user.type';
 
 export enum AuthActionTypes {
   LOADING = 'LOADING',
+  AUTHORIZING = 'AUTHORIZING',
   ERROR = 'ERROR',
   LOGIN = 'LOGIN',
   REGISTER = 'REGISTER',
@@ -12,6 +13,7 @@ export type AuthState = {
   user?: User;
   errors?: {};
   isLoading?: boolean;
+  isAuthorizing?: boolean;
 };
 
 type AuthAction = {
@@ -23,6 +25,8 @@ const AuthReducer = (state: AuthState, action: AuthAction) => {
   switch (action.type) {
     case AuthActionTypes.LOADING:
       return { ...state, isLoading: action.payload.isLoading };
+    case AuthActionTypes.AUTHORIZING:
+      return { ...state, isAuthorizing: action.payload.isAuthorizing };
     case AuthActionTypes.ERROR:
       return { ...state, errors: action.payload.errors };
     case AuthActionTypes.REGISTER:

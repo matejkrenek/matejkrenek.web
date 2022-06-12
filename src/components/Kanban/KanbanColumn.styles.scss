@@ -30,13 +30,29 @@
 }
 
 .kanbanColumn__content {
+    position: relative;
     padding: 2rem;
-    max-height: calc(100vh - 30rem);
+    max-height: calc(100vh - 38rem);
     overflow: auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     scrollbar-width: none;
+
+    &.is-loading {
+        min-height: 15rem;
+
+        &::before {
+            background-color: transparent;
+        }
+
+        &::after {
+            min-width: 40px;
+            min-height: 40px;
+            left: calc(50% - 20px);
+            top: calc(50% - 20px);
+        }
+    }
 
     &::-webkit-scrollbar {
         display: none;

@@ -209,6 +209,25 @@ export namespace KanbanApi {
     }
     
     export namespace Task {
+        export async function getAll(kanbanId: number): Promise<ApiResponse> {
+            try {
+                const response: AxiosResponse = await api.get(`/kanban/${kanbanId}/task`)
+                
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
+            } catch(error: AxiosError | any) {
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
+            }
+        }
         export async function add(kanbanId: number, request: KanbanTaskRequest): Promise<ApiResponse> {
             try {
                 const response: AxiosResponse = await api.post(`/kanban/${kanbanId}/task`, request)

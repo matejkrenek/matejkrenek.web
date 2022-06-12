@@ -7,7 +7,7 @@ import Button from 'components/Button/Button';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { ColumnService } from 'services/column/column.service';
 import Input from 'components/Input/Input';
-import { create } from 'domain';
+import { TaskService } from 'services/task/task.service';
 
 type KanbanProps = {
   kanban: IKanban;
@@ -15,11 +15,16 @@ type KanbanProps = {
 
 const Kanban: React.FC<KanbanProps> = ({ kanban }) => {
   const column = ColumnService.useContext();
+  const task = TaskService.useContext();
+
   const [isCreating, setIsCreating] = useState(false);
   const [columnName, setColumnName] = useState('');
 
   async function getColumns() {
     await column.loadColumns(kanban.id);
+  }
+  async function getTasks() {
+    await task.loadTasks(kanban.id);
   }
 
   async function addColumn(e: FormEvent<HTMLFormElement>) {
@@ -32,11 +37,12 @@ const Kanban: React.FC<KanbanProps> = ({ kanban }) => {
 
   useEffect(() => {
     getColumns();
+    getTasks();
   }, []);
 
   return (
     <div className="kanban">
-      {column.isLoading() ? '...loading' : column.all() && column.all().map((column: IKanbanColumn, index: number) => <KanbanColumn key={index} column={column} />)}
+      {column.all() && column.all().map((column: IKanbanColumn, index: number) => <KanbanColumn key={index} column={column} />)}
       {isCreating ? (
         <form onSubmit={addColumn}>
           <Input type="text" size="small" name="column_name" className="mb-8" value={columnName} onChange={(e) => setColumnName(e.target.value)} />

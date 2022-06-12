@@ -5,6 +5,7 @@ export enum KanbanColumnActionTypes {
   ERROR = 'ERROR',
   SETALL = 'SETALL',
   ADD = 'ADD',
+  EDIT = 'EDIT',
   REMOVE = 'REMOVE',
 }
 
@@ -29,6 +30,8 @@ const ColumnReducer = (state: KanbanColumnState, action: KanbanColumnAction) => 
         return { ...state, columns: [...state.columns!, action.payload.column] };
     case KanbanColumnActionTypes.REMOVE:
       return {...state, columns: state.columns?.filter(({ id }) => id !== action.payload.id)}
+    case KanbanColumnActionTypes.EDIT:
+      return {...state, columns: state.columns?.map((column) => column.id === action.payload.id ? action.payload.column : column)}
     case KanbanColumnActionTypes.ERROR:
       return { ...state, errors: action.payload.errors };
     default:

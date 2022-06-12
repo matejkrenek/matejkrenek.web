@@ -2,12 +2,11 @@ import AuthCard from 'components/Auth/AuthCard';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import { FormEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthService } from 'services/auth/auth.service';
 
 const Register: React.FC = () => {
   const auth = AuthService.useContext();
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: '',
     email: '',
@@ -19,10 +18,6 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     await auth.register(form);
-
-    if (!auth.errors()) {
-      navigate('/', { replace: true });
-    }
   }
 
   return (

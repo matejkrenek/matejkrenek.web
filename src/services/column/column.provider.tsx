@@ -11,7 +11,8 @@ type ColumnProviderProps = {
 type ColumnContextState = {
   all: () => any;
   add: (kanbanId: number, request: KanbanColumnRequest) => any;
-  remove: (kanbanId: number, id: number) => any;
+  edit: (kanbanId: number, columnId: number, request: KanbanColumnRequest) => any;
+  remove: (kanbanId: number, columnId: number) => any;
   isLoading: () => any;
   errors: () => any;
   loadColumns: (kanbanId: number) => void;
@@ -21,6 +22,7 @@ export const ColumnContext = React.createContext<ColumnContextState>({
   all: () => false,
   add: () => false,
   remove: () => false,
+  edit: () => false,
   isLoading: () => false,
   errors: () => false,
   loadColumns: () => false,
@@ -161,8 +163,51 @@ const ColumnProvider: React.FC<ColumnProviderProps> = ({ children }) => {
       },
     });
   };
+  const edit = async (kanbanId: number, columnId: number, request: KanbanColumnRequest) => {
+    dispatch({
+      type: KanbanColumnActionTypes.LOADING,
+      payload: {
+        isLoading: true,
+      },
+    });
 
-  return <ColumnContext.Provider value={{ all: all, add: add, remove: remove, isLoading: isLoading, errors: errors, loadColumns: loadColumns }}>{children}</ColumnContext.Provider>;
+    const { status, data, errors }: ApiResponse = await KanbanApi.Column.edit(kanbanId, columnId, request);
+    switch (status) {
+      case 422:
+        dispatch({
+          type: KanbanColumnActionTypes.ERROR,
+          payload: {
+            errors: errors,
+          },
+        });
+        break;
+      case 404:
+        dispatch({
+          type: KanbanColumnActionTypes.ERROR,
+          payload: {
+            columns: null,
+          },
+        });
+        break;
+      default:
+        dispatch({
+          type: KanbanColumnActionTypes.EDIT,
+          payload: {
+            id: columnId,
+            column: data.data,
+          },
+        });
+    }
+
+    dispatch({
+      type: KanbanColumnActionTypes.LOADING,
+      payload: {
+        isLoading: false,
+      },
+    });
+  };
+
+  return <ColumnContext.Provider value={{ all: all, add: add, edit: edit, remove: remove, isLoading: isLoading, errors: errors, loadColumns: loadColumns }}>{children}</ColumnContext.Provider>;
 };
 
 export default ColumnProvider;

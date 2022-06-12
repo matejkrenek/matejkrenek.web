@@ -16,6 +16,7 @@ export interface KanbanColumnRequest {
 export interface KanbanTaskRequest {
     name: string
     description?: string
+    column_id?: number
     executor_id?: number
     row?: number
     is_completed?: boolean 
