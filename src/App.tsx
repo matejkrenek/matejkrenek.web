@@ -6,7 +6,8 @@ import Login from 'pages/Login/Login';
 import Register from 'pages/Register/Register';
 import { AuthService } from 'services/auth/auth.service';
 import { useEffect } from 'react';
-import Kanban from 'pages/Kanban/Kanban';
+import Board from 'pages/Board/Board';
+import { KanbanService } from 'services/kanban/kanban.service';
 
 const App: React.FC = () => {
   const auth = AuthService.useContext();
@@ -29,10 +30,12 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/:slug"
+          path="/:id"
           element={
             <AuthService.Authorized>
-              <Kanban />
+              <KanbanService.Provider>
+                <Board />
+              </KanbanService.Provider>
             </AuthService.Authorized>
           }
         />

@@ -17,7 +17,7 @@ const KanbanTask: React.FC<KanbanTaskProps> = ({ task }) => {
       <h4 className="mb-8">{task.name}</h4>
       <p>{task.description}</p>
       <div className="d-flex align-center justify-between mt-16">
-        <AvatarList avatars={task.members} limit={4} size="small" />
+        {/* <AvatarList users={task.members} limit={4} size="small" /> */}
         <div className="d-flex">
           <div className="d-flex align-center mr-12 text--muted">
             <FiMessageCircle className="mr-4" />

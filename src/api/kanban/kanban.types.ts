@@ -1,3 +1,8 @@
+export interface KanbanRequest {
+    name?: string
+    description?: string
+}
+
 export interface KanbanInviteRequest {
     user_id: number
 }

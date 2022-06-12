@@ -44,6 +44,16 @@
         background-color: color(purple);
     }
 
+    &--small {
+        font-size: 1.4rem;
+        padding: 0.8rem;
+
+        span {
+            font-size: 1.4rem;
+
+        }
+    }
+
     &:hover,
     &:focus,
     &:active {

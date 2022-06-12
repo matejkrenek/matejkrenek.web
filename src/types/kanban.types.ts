@@ -10,6 +10,8 @@ export interface IKanbanTask {
 }
 
 export interface IKanbanColumn {
+    id: number
+    kanban_id: number
     name: string
     color?: string
     order: number

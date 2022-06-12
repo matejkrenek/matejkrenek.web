@@ -1,32 +1,27 @@
-import { UserAvatar } from 'types/user.type';
+import { User } from 'types/user.type';
 import AvatarBubble from './AvatarBubble';
 import './AvatarList.styles.scss';
 
 type AvatarListProps = {
-  avatars: UserAvatar[];
+  users: User[];
   limit: number;
   size?: 'small' | 'regular';
+  className?: string;
 };
 
-const AvatarList: React.FC<AvatarListProps> = ({ avatars, limit, size = 'regular' }) => {
+const AvatarList: React.FC<AvatarListProps> = ({ users, limit, size = 'regular', className }) => {
   return (
-    <ul className="avatar__list">
-      {avatars.map((avatar: UserAvatar, index: number) => {
+    <ul className={`avatar__list ${className ? className : ''}`}>
+      {users.map((user: User, index: number) => {
         if (index < limit) {
-          return <AvatarBubble key={index} size={size} avatar={avatar} />;
+          return <AvatarBubble key={index} size={size} user={user} />;
         }
 
         if (index === limit) {
-          return (
-            <AvatarBubble
-              key={index}
-              size={size}
-              avatar={{
-                inicials: `+${avatars.length - limit}`,
-              }}
-            />
-          );
+          return <AvatarBubble key={index} size={size} remaining={users.length - limit} />;
         }
+
+        return null;
       })}
     </ul>
   );

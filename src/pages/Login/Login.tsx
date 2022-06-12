@@ -1,7 +1,7 @@
 import AuthCard from 'components/Auth/AuthCard';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthService } from 'services/auth/auth.service';
 
