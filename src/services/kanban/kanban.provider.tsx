@@ -75,13 +75,6 @@ const KanbanProvider: React.FC<KanbanProviderProps> = ({ children }) => {
   };
 
   const edit = async (id: number, request: KanbanRequest) => {
-    dispatch({
-      type: KanbanActionTypes.LOADING,
-      payload: {
-        isLoading: true,
-      },
-    });
-
     const { status, data, errors }: ApiResponse = await KanbanApi.edit(id, request);
     switch (status) {
       case 422:
@@ -108,13 +101,6 @@ const KanbanProvider: React.FC<KanbanProviderProps> = ({ children }) => {
           },
         });
     }
-
-    dispatch({
-      type: KanbanActionTypes.LOADING,
-      payload: {
-        isLoading: false,
-      },
-    });
   };
 
   return <KanbanContext.Provider value={{ get: get, edit: edit, isLoading: isLoading, errors: errors, loadKanban: loadKanban }}>{children}</KanbanContext.Provider>;

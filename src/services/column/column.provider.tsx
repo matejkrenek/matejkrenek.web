@@ -2,6 +2,7 @@ import { KanbanApi } from 'api/kanban/kanban.api';
 import { KanbanColumnRequest } from 'api/kanban/kanban.types';
 import React from 'react';
 import { ApiResponse } from 'types/api.types';
+import { IKanbanColumn } from 'types/kanban.types';
 import ColumnReducer, { KanbanColumnActionTypes } from './column.reducer';
 
 type ColumnProviderProps = {
@@ -10,9 +11,11 @@ type ColumnProviderProps = {
 
 type ColumnContextState = {
   all: () => any;
+  get: (id: number) => any;
   add: (kanbanId: number, request: KanbanColumnRequest) => any;
   edit: (kanbanId: number, columnId: number, request: KanbanColumnRequest) => any;
   remove: (kanbanId: number, columnId: number) => any;
+  order: (column: IKanbanColumn, previous: number, current: number) => any;
   isLoading: () => any;
   errors: () => any;
   loadColumns: (kanbanId: number) => void;
@@ -20,9 +23,11 @@ type ColumnContextState = {
 
 export const ColumnContext = React.createContext<ColumnContextState>({
   all: () => false,
+  get: () => false,
   add: () => false,
   remove: () => false,
   edit: () => false,
+  order: () => false,
   isLoading: () => false,
   errors: () => false,
   loadColumns: () => false,
@@ -34,6 +39,44 @@ const ColumnProvider: React.FC<ColumnProviderProps> = ({ children }) => {
   const all = () => store.columns;
   const isLoading = () => store.isLoading;
   const errors = () => store.errors;
+  const order = async (column: IKanbanColumn, previous: number, current: number) => {
+    const prevColumns = store.columns;
+
+    const { status, data, errors }: ApiResponse = await KanbanApi.Column.edit(column.kanban_id, column.id, {
+      order: current,
+    });
+
+    switch (status) {
+      case 422:
+        dispatch({
+          type: KanbanColumnActionTypes.ERROR,
+          payload: {
+            errors: errors,
+          },
+        });
+        break;
+      case 404:
+        dispatch({
+          type: KanbanColumnActionTypes.SETALL,
+          payload: {
+            columns: prevColumns,
+          },
+        });
+        break;
+      default:
+        dispatch({
+          type: KanbanColumnActionTypes.SETALL,
+          payload: {
+            columns: data.data,
+          },
+        });
+        break;
+    }
+  };
+
+  const get = (id: number) => {
+    return store.columns.filter((column: IKanbanColumn) => column.id === id)[0];
+  };
 
   const loadColumns = async (kanbanId: number) => {
     dispatch({
@@ -190,6 +233,10 @@ const ColumnProvider: React.FC<ColumnProviderProps> = ({ children }) => {
         });
         break;
       default:
+        console.log({
+          id: columnId,
+          column: data.data,
+        });
         dispatch({
           type: KanbanColumnActionTypes.EDIT,
           payload: {
@@ -207,7 +254,7 @@ const ColumnProvider: React.FC<ColumnProviderProps> = ({ children }) => {
     });
   };
 
-  return <ColumnContext.Provider value={{ all: all, add: add, edit: edit, remove: remove, isLoading: isLoading, errors: errors, loadColumns: loadColumns }}>{children}</ColumnContext.Provider>;
+  return <ColumnContext.Provider value={{ all, add, edit, order, get, remove, isLoading, errors, loadColumns }}>{children}</ColumnContext.Provider>;
 };
 
 export default ColumnProvider;

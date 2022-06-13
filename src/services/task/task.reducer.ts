@@ -6,6 +6,8 @@ export enum KanbanTaskActionTypes {
   ERROR = 'ERROR',
   ADD = 'ADD',
   SET = 'SET',
+  REMOVE = 'REMOVE',
+  EDIT = 'EDIT',
 }
 
 export type KanbanTaskState = {
@@ -30,6 +32,10 @@ const TaskReducer = (state: KanbanTaskState, action: KanbanTaskAction) => {
       return { ...state, tasks: [...state.tasks!, action.payload.task] };
     case KanbanTaskActionTypes.SET:
       return { ...state, tasks: action.payload.tasks };
+    case KanbanTaskActionTypes.REMOVE:
+      return { ...state, tasks: state.tasks?.filter(({ id }) => id !== action.payload.id) };
+    case KanbanTaskActionTypes.EDIT:
+      return {...state, tasks: state.tasks?.map((task) => task.id === action.payload.task.id ? action.payload.task : task)}
     case KanbanTaskActionTypes.ERROR:
       return { ...state, errors: action.payload.errors };
     default:

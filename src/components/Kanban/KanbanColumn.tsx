@@ -1,5 +1,5 @@
 import { createRef, FormEvent, useEffect, useState } from 'react';
-import { FiCheck, FiX, FiEdit2, FiPlus, FiTrash } from 'react-icons/fi';
+import { FiCheck, FiX, FiEdit2, FiPlus, FiTrash, FiCoffee } from 'react-icons/fi';
 import { IKanbanColumn, IKanbanTask } from 'types/kanban.types';
 
 import KanbanTask from './KanbanTask';
@@ -79,7 +79,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column }) => {
               <h5>{column.name}</h5>
             </>
           )}
-          {/* {tasks && <span className="bubble ml-12">{tasks.length}</span>} */}
+          <span className="bubble ml-12">{task.whereColumn(column.id).length || 0}</span>
         </div>
         <div className="kanbanTask__add d-flex">
           {isEditing ? (
@@ -136,6 +136,14 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ column }) => {
         {task.whereColumn(column.id).map((task: IKanbanTask, index: number) => (
           <KanbanTask key={index} task={task} />
         ))}
+        {!task.whereColumn(column.id).length && !task.isLoading() && (
+          <div className="d-flex align-center flex-column justify-center p-16">
+            <span className="badge badge--large mb-12">
+              <FiCoffee />
+            </span>
+            <h5 className="text--muted">Žádné tasky</h5>
+          </div>
+        )}
       </main>
     </div>
   );

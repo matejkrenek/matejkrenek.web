@@ -7,6 +7,7 @@ export enum KanbanColumnActionTypes {
   ADD = 'ADD',
   EDIT = 'EDIT',
   REMOVE = 'REMOVE',
+  REORDER = 'REORDER',
 }
 
 export type KanbanColumnState = {
@@ -32,6 +33,21 @@ const ColumnReducer = (state: KanbanColumnState, action: KanbanColumnAction) => 
       return {...state, columns: state.columns?.filter(({ id }) => id !== action.payload.id)}
     case KanbanColumnActionTypes.EDIT:
       return {...state, columns: state.columns?.map((column) => column.id === action.payload.id ? action.payload.column : column)}
+    case KanbanColumnActionTypes.REORDER:
+      let columns = state.columns;
+
+      if(columns) {
+        columns = Array.from(columns)
+        const prevElm = columns.filter(elm => elm.order === action.payload.previous)[0]
+        const currentElm = columns.filter(elm => elm.order === action.payload.current)[0]
+        const [removed] = columns.splice(columns.indexOf(prevElm), 1);
+        columns.splice(columns.indexOf(currentElm), 0, removed)
+        columns.forEach((col: IKanbanColumn, index: number) => col.order = index + 1)
+
+      }
+
+
+      return {...state, columns: columns}
     case KanbanColumnActionTypes.ERROR:
       return { ...state, errors: action.payload.errors };
     default:

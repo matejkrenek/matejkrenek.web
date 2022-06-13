@@ -8,7 +8,7 @@ export interface KanbanInviteRequest {
 }
 
 export interface KanbanColumnRequest {
-    name: string
+    name?: string
     order?: number
     color?: string
 }

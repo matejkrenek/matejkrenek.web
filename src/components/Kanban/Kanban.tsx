@@ -41,26 +41,28 @@ const Kanban: React.FC<KanbanProps> = ({ kanban }) => {
   }, []);
 
   return (
-    <div className="kanban">
-      {column.all() && column.all().map((column: IKanbanColumn, index: number) => <KanbanColumn key={index} column={column} />)}
-      {isCreating ? (
-        <form onSubmit={addColumn}>
-          <Input type="text" size="small" name="column_name" className="mb-8" value={columnName} onChange={(e) => setColumnName(e.target.value)} />
-          <div className="d-flex">
-            <Button type="regular" size="small" className="w-50 mr-4" onClick={() => setIsCreating(false)}>
-              Zrušit
-            </Button>
-            <Button type="primary" size="small" className="w-50 ml-4">
-              Vytvořit
-            </Button>
-          </div>
-        </form>
-      ) : (
-        <Button icon={<FiPlus />} type="regular" onClick={() => setIsCreating(true)}>
-          Add column
-        </Button>
-      )}
-    </div>
+    <>
+      <div className="kanban">
+        {column.all() && column.all().map((column: IKanbanColumn, index: number) => <KanbanColumn key={index} column={column} />)}
+        {isCreating ? (
+          <form onSubmit={addColumn}>
+            <Input type="text" size="small" name="column_name" className="mb-8" value={columnName} onChange={(e) => setColumnName(e.target.value)} />
+            <div className="d-flex">
+              <Button type="regular" size="small" className="w-50 mr-4" onClick={() => setIsCreating(false)}>
+                Zrušit
+              </Button>
+              <Button type="primary" size="small" className="w-50 ml-4">
+                Vytvořit
+              </Button>
+            </div>
+          </form>
+        ) : (
+          <Button icon={<FiPlus />} type="regular" onClick={() => setIsCreating(true)}>
+            Add column
+          </Button>
+        )}
+      </div>
+    </>
   );
 };
 

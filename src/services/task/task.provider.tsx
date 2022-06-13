@@ -11,6 +11,8 @@ type TaskProviderProps = {
 
 type TaskContextState = {
   add: (kanbanId: number, request: KanbanTaskRequest) => any;
+  edit: (task: IKanbanTask, request: KanbanTaskRequest) => any;
+  remove: (task: IKanbanTask) => any;
   whereColumn: (columnId: number) => any;
   isLoading: () => any;
   isAdding: () => any;
@@ -20,6 +22,8 @@ type TaskContextState = {
 
 export const TaskContext = React.createContext<TaskContextState>({
   add: () => false,
+  edit: () => false,
+  remove: () => false,
   whereColumn: () => [],
   isLoading: () => false,
   isAdding: () => false,
@@ -36,6 +40,76 @@ const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
 
   const whereColumn = (columnId: number) => {
     return store.tasks?.filter((task: IKanbanTask) => task.column.id === columnId);
+  };
+
+  const remove = async (task: IKanbanTask) => {
+    const { status, errors }: ApiResponse = await KanbanApi.Task.remove(task.column.kanban_id, task.id);
+    switch (status) {
+      case 422:
+        dispatch({
+          type: KanbanTaskActionTypes.ERROR,
+          payload: {
+            errors: errors,
+          },
+        });
+        break;
+      case 404:
+        dispatch({
+          type: KanbanTaskActionTypes.ERROR,
+          payload: {
+            tasks: null,
+          },
+        });
+        break;
+      default:
+        dispatch({
+          type: KanbanTaskActionTypes.REMOVE,
+          payload: {
+            id: task.id,
+          },
+        });
+    }
+  };
+
+  const edit = async (task: IKanbanTask, request: KanbanTaskRequest) => {
+    dispatch({
+      type: KanbanTaskActionTypes.ADDING,
+      payload: {
+        isAdding: true,
+      },
+    });
+    const { status, data, errors }: ApiResponse = await KanbanApi.Task.edit(task.column.kanban_id, task.id, request);
+    switch (status) {
+      case 422:
+        dispatch({
+          type: KanbanTaskActionTypes.ERROR,
+          payload: {
+            errors: errors,
+          },
+        });
+        break;
+      case 404:
+        dispatch({
+          type: KanbanTaskActionTypes.ERROR,
+          payload: {
+            kanban: null,
+          },
+        });
+        break;
+      default:
+        dispatch({
+          type: KanbanTaskActionTypes.EDIT,
+          payload: {
+            task: data.data,
+          },
+        });
+    }
+    dispatch({
+      type: KanbanTaskActionTypes.ADDING,
+      payload: {
+        isAdding: false,
+      },
+    });
   };
 
   const loadTasks = async (kanbanId: number) => {
@@ -122,7 +196,7 @@ const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     });
   };
 
-  return <TaskContext.Provider value={{ add, whereColumn, loadTasks, isLoading, isAdding, errors }}>{children}</TaskContext.Provider>;
+  return <TaskContext.Provider value={{ add, remove, edit, whereColumn, loadTasks, isLoading, isAdding, errors }}>{children}</TaskContext.Provider>;
 };
 
 export default TaskProvider;

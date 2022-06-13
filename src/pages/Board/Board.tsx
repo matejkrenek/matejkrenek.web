@@ -3,7 +3,7 @@ import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import Kanban from 'components/Kanban/Kanban';
 import React, { createRef, useEffect, useState } from 'react';
-import { FiCheck, FiEdit2, FiPlus } from 'react-icons/fi';
+import { FiCheck, FiEdit2 } from 'react-icons/fi';
 import { Navigate, useParams, useLocation } from 'react-router-dom';
 import { ColumnService } from 'services/column/column.service';
 import { KanbanService } from 'services/kanban/kanban.service';
@@ -45,9 +45,9 @@ const Board: React.FC = () => {
   }, [isEditing]);
 
   return (
-    <main className="container">
+    <main className={`container ${kanban.isLoading() ? 'is-loading' : ''}`}>
       {kanban.isLoading() ? (
-        '...loading'
+        <></>
       ) : kanban.get() ? (
         <>
           <header className="header">

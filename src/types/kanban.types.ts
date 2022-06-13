@@ -1,6 +1,7 @@
 import { User } from "./user.type"
 
 export interface IKanbanTask {
+    id: number
     name: string
     description?: string
     executor?: User
