@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { Config } from "types/config.type";
 
 export const config: Config.Api = {
-    url: "http://127.0.0.1:8000",
+    url: "https://api.matejkrenek.cz",
     version: 'v1'
 }
 
