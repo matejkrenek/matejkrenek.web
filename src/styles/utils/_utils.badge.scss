@@ -9,7 +9,12 @@
     font-weight: font.weight(medium);
     background-color: color(grey, secondary);
     display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-transform: capitalize;
+    width: fit-content;
+    width: -moz-fit-content;
 }
 
 .badge--orange {
@@ -25,4 +30,13 @@
 .badge--green {
     color: color(green);
     background-color: color(green, transparent);
+}
+
+.badge--tiny {
+    padding: 0.1rem 0.4rem;
+}
+
+.badge--large {
+    padding: 0.6rem;
+    font-size: 2.4rem;
 }

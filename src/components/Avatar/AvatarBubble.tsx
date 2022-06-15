@@ -1,15 +1,24 @@
-import { UserAvatar } from 'types/user.type';
+import { User } from 'types/user.type';
 import './AvatarBubble.styles.scss';
 
 type AvatarBubbleProps = {
-  avatar: UserAvatar;
+  user?: User;
+  remaining?: number;
   size?: 'small' | 'regular';
 };
 
-const AvatarBubble: React.FC<AvatarBubbleProps> = ({ avatar, size = 'regular' }) => {
+const AvatarBubble: React.FC<AvatarBubbleProps> = ({ user, remaining, size = 'regular' }) => {
   return (
     <div className={`avatar avatar--${size}`}>
-      {avatar.image ? <img className="avatar--image" src={avatar.image} alt={avatar.inicials} /> : <span className="avatar--inicials">{avatar.inicials}</span>}
+      {user ? (
+        user.avatar ? (
+          <img className="avatar--image" src={user.avatar} alt={user.username.slice(0, 2).toUpperCase()} />
+        ) : (
+          <span className="avatar--inicials">{user.username.slice(0, 2).toUpperCase()}</span>
+        )
+      ) : (
+        <span className="avatar--inicials">{remaining}</span>
+      )}
     </div>
   );
 };

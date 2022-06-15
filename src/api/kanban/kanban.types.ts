@@ -1,9 +1,14 @@
+export interface KanbanRequest {
+    name?: string
+    description?: string
+}
+
 export interface KanbanInviteRequest {
     user_id: number
 }
 
 export interface KanbanColumnRequest {
-    name: string
+    name?: string
     order?: number
     color?: string
 }
@@ -11,6 +16,7 @@ export interface KanbanColumnRequest {
 export interface KanbanTaskRequest {
     name: string
     description?: string
+    column_id?: number
     executor_id?: number
     row?: number
     is_completed?: boolean 

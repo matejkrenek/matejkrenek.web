@@ -3,7 +3,7 @@ import './Button.styles.scss';
 type ButtonProps = {
   children?: React.ReactNode;
   icon?: React.ReactNode;
-  type?: 'purple' | 'primary' | 'regular';
+  type?: 'purple' | 'primary' | 'regular' | 'outline';
   size?: 'small' | 'medium' | 'normal';
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;

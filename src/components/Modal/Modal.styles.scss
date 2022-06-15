@@ -1,0 +1,54 @@
+@use '../../styles/core/variables/variables.colors' as *;
+
+.modal {
+    position: relative;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(#000000, 30%);
+    animation: 0.3s appear2;
+}
+
+.modal__box {
+    position: absolute;
+    top: 24rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 1.6rem;
+    background-color: color(white);
+    min-width: 40rem;
+    animation: 0.3s appear;
+
+    header {
+        padding: 1.2rem 1.6rem;
+        border-bottom: 1px solid color(grey, secondary);
+    }
+
+    main {
+        padding: 1.2rem 1.6rem;
+
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0.4;
+        transform: translate(-50%, 10rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0rem);
+    }
+}
+
+@keyframes appear2 {
+    0% {
+        background-color: rgba(#000000, 0%);
+    }
+    100% {
+        background-color: rgba(#000000, 30%);
+    }
+}

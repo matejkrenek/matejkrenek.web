@@ -4,8 +4,9 @@
 .input {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
-    input {
+    input, select, textarea {
         font-size: font.size(input);
         font-family: font.family();
         font-weight: font.weight(regular);
@@ -13,8 +14,36 @@
         background-color: transparent;
         border: 1px solid color(black, secondary);
         outline: none;
+        width: 100%;
         border-radius: 0.6rem;
 
+    }
+
+    textarea {
+        resize: none;
+        min-height: 8rem;
+        max-height: 30rem;
+    }
+
+    &--small {
+        input, textarea, select {
+            padding: 0.8rem 1.2rem;
+            font-size: 1.4rem;
+        }
+    }
+
+    &--large {
+        input, textarea, select {
+            padding: 0.8rem 1.2rem;
+            font-size: font.size(h2);
+            font-weight: font.weight(semiBold);
+        }
+    }
+
+    &--medium {
+        input, textarea, select {
+            padding: 0.8rem 1.2rem;
+        }
     }
 
     label {

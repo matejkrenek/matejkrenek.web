@@ -1,0 +1,10 @@
+@use '../../styles/core/variables/variables.fonts' as font;
+@use '../../styles/core/variables/variables.colors' as *;
+
+.navbar {
+    padding: 2.4rem 4.8rem;
+    border-bottom: 1px solid color(grey, secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

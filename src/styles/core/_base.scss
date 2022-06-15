@@ -21,6 +21,54 @@ body {
     color: color(black);
 }
 
+.is-loading {
+    overflow: hidden;
+    
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+        background-color: color(white);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        border: 3px solid color(purple, transparent);
+        border-left-color: color(purple);
+        border-radius: 50%;
+        left: calc(50% - 25px);
+        right: unset;
+        top: calc(50% - 25px);
+        min-width: 50px;
+        min-height: 50px;
+        z-index: 101;
+        animation: spin 1.5s linear infinite;
+        opacity: 1;
+        pointer-events: none;
+        transition: opacity 0.1s;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(1turn); 
+    }
+}
+
+.container {
+    position: relative;
+    padding: 4.2rem 4.8rem;
+
+    &.is-loading {
+        min-height: 30rem;
+    }
+}
+
 img {
     display: block;
 }
