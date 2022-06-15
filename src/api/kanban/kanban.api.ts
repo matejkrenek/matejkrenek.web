@@ -6,34 +6,82 @@ import { KanbanColumnRequest, KanbanInviteRequest, KanbanTaskRequest } from "./k
 export namespace KanbanApi {
     export async function get(id: number): Promise<ApiResponse> {
         try {
-            return await api.get(`/kanban/${id}`)
+            const response: AxiosResponse = await api.get(`/kanban/${id}`)
+                        
+            return await {
+                status: response.status,
+                message: response.data.message || '',
+                errors: response.data.errors || [],
+                data: response.data
+            };
         } catch(error: AxiosError | any) {
-            return exception;
+            return {
+                status: error.response.status,
+                message: error.response.data.message || error.message,
+                errors: error.response.data.errors || [],
+                data: error.response.data
+            };
         }
     }
 
     export namespace Invitation {
         export async function invite(kanbanId: number, request: KanbanInviteRequest): Promise<ApiResponse> {
             try {
-                return await api.post(`/kanban/${kanbanId}/invite`, request)
+                const response: AxiosResponse = await api.post(`/kanban/${kanbanId}/invite`, request)
+                            
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
             } catch(error: AxiosError | any) {
-                return exception;
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
             }
         }
 
         export async function accept(token: string): Promise<ApiResponse> {
             try {
-                return await api.post(`/kanban/invitation/${token}/accept`)
+                const response: AxiosResponse = await api.post(`/kanban/invitation/${token}/accept`)
+                            
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
             } catch(error: AxiosError | any) {
-                return exception;
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
             }
         }
         
         export async function reject(token: string): Promise<ApiResponse> {
             try {
-                return await api.post(`/kanban/invitation/${token}/reject`)
+                const response: AxiosResponse = await api.post(`/kanban/invitation/${token}/reject`)
+                            
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
             } catch(error: AxiosError | any) {
-                return exception;
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
             }
         }
     }
@@ -41,26 +89,62 @@ export namespace KanbanApi {
     export namespace Column {
         export async function add(kanbanId: number, request: KanbanColumnRequest): Promise<ApiResponse> {
             try {
-                return await api.post(`/kanban/${kanbanId}/column`, request)
+                const response: AxiosResponse = await api.post(`/kanban/${kanbanId}/column`, request)
+                            
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
             } catch(error: AxiosError | any) {
-                return exception;
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
             }
         }
         
         export async function edit(kanbanId: number, columnId: number, request: KanbanColumnRequest): Promise<ApiResponse> {
             try {
-                return await api.put(`/kanban/${kanbanId}/column/${columnId}`, request)
+                const response: AxiosResponse = await api.put(`/kanban/${kanbanId}/column/${columnId}`, request)
+                            
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
             } catch(error: AxiosError | any) {
-                return exception;
-            }  
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
+            }
         }
 
         export async function remove(kanbanId: number, columnId: number): Promise<ApiResponse> {
             try {
-                return await api.delete(`/kanban/${kanbanId}/column/${columnId}`)
+                const response: AxiosResponse = await api.delete(`/kanban/${kanbanId}/column/${columnId}`)
+                
+                return await {
+                    status: response.status,
+                    message: response.data.message || '',
+                    errors: response.data.errors || [],
+                    data: response.data
+                };
             } catch(error: AxiosError | any) {
-                return exception;
-            }  
+                return {
+                    status: error.response.status,
+                    message: error.response.data.message || error.message,
+                    errors: error.response.data.errors || [],
+                    data: error.response.data
+                };
+            }
         }
     }
     
